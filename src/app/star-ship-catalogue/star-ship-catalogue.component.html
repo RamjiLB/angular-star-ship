@@ -1,0 +1,53 @@
+<div class="container pt-4">
+	<p>
+		See the list of star ships that can take you to your destination
+	</p>
+
+	<form [formGroup]="starShipForm" (ngSubmit)="getStarShips()" autocomplete="off">
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<input formControlName="distanceToTravel"
+          id="distanceToTravel"
+          type="text"
+          placeholder="Enter the distance you want to travel"
+          class="form-control"/>
+	    </div>
+			</div>
+
+			<div class="form-group">
+				<button [disabled]="starShipForm.invalid" type="submit" class="btn btn-primary submit-btn">Get ships</button>
+			</div>
+	</form>
+
+
+<p *ngIf="isLoading && !hasError">
+	Fetching star ships for your travel.....May the force be with you
+</p>
+
+<p *ngIf="hasError">
+	ERROR! our server seem to be down, try later. May the force be with you
+</p>
+
+<div class="table-responsive-md">
+<table class="table table-dark">
+	<thead *ngIf="hasData">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Name</th>
+			<th scope="col">MGLT</th>
+      <th scope="col">Consumables</th>
+			<th scope="col">Stops required</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="js-starship-row" *ngFor="let ship of starShips$|async; let shipNo = index">
+			<th scope="row">{{shipNo + 1}}</th>
+			<td>{{ship.name}}</td>
+			<td>{{ship.megaLights}}</td>
+      <td>{{ship.consumables}}</td>
+			<td>{{ship.stopsRequired}}</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
